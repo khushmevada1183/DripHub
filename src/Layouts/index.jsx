@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header/Header.jsxx';
-import Subheader from '../components/Header/Subheader.jsxx';
-import Footer from '../components/Footer/Footer.jsx';
+import Header from '../Components/Header/Header.jsx';
+import Subheader from '../Components/Header/Subheader.jsx';
+import Footer from '../Components/Footer/Footer.jsx';
 import { m, fadeIn, viewport } from '../animation/motion';
 
 // 🏗️ Main Layout for most pages (with header, subheader, footer)
