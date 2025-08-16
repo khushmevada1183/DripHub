@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header/Header';
-import Subheader from '../components/Header/Subheader';
+import Header from '../components/Header/Header.jsxx';
+import Subheader from '../components/Header/Subheader.jsxx';
 import Footer from '../components/Footer/Footer.jsx';
 import { m, fadeIn, viewport } from '../animation/motion';
 

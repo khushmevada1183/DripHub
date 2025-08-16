@@ -1,5 +1,17 @@
 // Advanced formatting utilities
 
+// Price and currency formatting
+export const formatPrice = (price, currency = 'USD', locale = 'en-US') => {
+  if (price === null || price === undefined) return '$0.00';
+  
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(Number(price));
+};
+
 export const formatCurrency = (amount, currency = 'USD', locale = 'en-US', options = {}) => {
   const defaultOptions = {
     style: 'currency',
@@ -10,6 +22,37 @@ export const formatCurrency = (amount, currency = 'USD', locale = 'en-US', optio
   };
   
   return new Intl.NumberFormat(locale, defaultOptions).format(amount);
+};
+
+// Date and time formatting
+export const formatDate = (date, options = {}, locale = 'en-US') => {
+  if (!date) return '';
+  
+  const defaultOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  
+  return new Intl.DateTimeFormat(locale, { ...defaultOptions, ...options }).format(new Date(date));
+};
+
+// Number formatting
+export const formatNumber = (number, locale = 'en-US', options = {}) => {
+  if (number === null || number === undefined) return '0';
+  
+  return new Intl.NumberFormat(locale, options).format(Number(number));
+};
+
+// Text formatting
+export const truncateText = (text, maxLength = 100, suffix = '...') => {
+  if (!text || text.length <= maxLength) return text || '';
+  return text.substr(0, maxLength).trim() + suffix;
+};
+
+export const capitalize = (str) => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
 export const formatRelativeTime = (date) => {

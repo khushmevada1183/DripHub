@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 const Dropdown = ({ 
   trigger, 
-  children, 
-  position = 'bottom-left',
+  children,
+  items = [], // Add items support
+  align = 'left', // left, right, center
+  position = 'bottom',
   className = '',
   disabled = false
 }) => {
@@ -22,11 +25,22 @@ const Dropdown = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const alignmentClasses = {
+    'left': 'left-0',
+    'right': 'right-0', 
+    'center': 'left-1/2 transform -translate-x-1/2'
+  };
+
   const positionClasses = {
-    'bottom-left': 'top-full left-0 mt-1',
-    'bottom-right': 'top-full right-0 mt-1',
-    'top-left': 'bottom-full left-0 mb-1',
-    'top-right': 'bottom-full right-0 mb-1'
+    'bottom': 'top-full mt-1',
+    'top': 'bottom-full mb-1'
+  };
+
+  const handleItemClick = (item) => {
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -41,9 +55,36 @@ const Dropdown = ({
       {isOpen && (
         <div className={`
           absolute z-50 bg-white border border-gray-200 rounded-lg shadow-lg min-w-max
-          ${positionClasses[position]}
+          ${positionClasses[position]} ${alignmentClasses[align]}
         `}>
-          {children}
+          {items.length > 0 ? (
+            <div className="py-1">
+              {items.map((item, index) => (
+                <div key={index}>
+                  {item.href ? (
+                    <Link
+                      to={item.href}
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.icon && <span className="text-lg">{item.icon}</span>}
+                      <span>{item.label}</span>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => handleItemClick(item)}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors text-left"
+                    >
+                      {item.icon && <span className="text-lg">{item.icon}</span>}
+                      <span>{item.label}</span>
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            children
+          )}
         </div>
       )}
     </div>
