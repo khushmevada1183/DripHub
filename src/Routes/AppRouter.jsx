@@ -18,7 +18,7 @@ const LazyComponents = {
   
   // Authentication Pages
   Login: lazy(() => import('../Pages/Auth/Login')),
-  Register: lazy(() => import('../Pages/Auth/SignUp')),
+  SignUp: lazy(() => import('../Pages/Auth/SignUp')),
   ForgotPassword: lazy(() => import('../Pages/Auth/ForgotPassword')),
   
   // Shopping Pages

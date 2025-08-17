@@ -154,8 +154,8 @@ export const ROUTES_CONFIG = [
   },
   {
     path: ROUTE_PATHS.REGISTER,
-    name: 'Register',
-    component: 'Register',
+  name: 'SignUp',
+  component: 'SignUp',
     layout: 'AuthLayout',
     meta: {
       title: 'Sign Up - DripHub',
