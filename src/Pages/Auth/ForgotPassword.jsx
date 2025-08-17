@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../Routes/routes.config';
+import { useAuth } from '../../Context/AuthContext';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const { forgotPassword } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,14 +17,17 @@ const ForgotPassword = () => {
     setMessage('');
 
     try {
-      // API call to send reset password email
-      // const result = await api.forgotPassword(email);
+      // Call the forgotPassword method from AuthContext
+      const response = await forgotPassword(email);
       
-      // Simulation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setMessage('Password reset instructions have been sent to your email address.');
+      if (response.success) {
+        setMessage(response.message || 'Password reset instructions have been sent to your email address.');
+      } else {
+        setError(response.error || 'Failed to send reset email. Please try again.');
+      }
     } catch (err) {
-      setError('Failed to send reset email. Please try again.');
+      setError('An error occurred. Please try again later.');
+      console.error('Forgot password error:', err);
     } finally {
       setLoading(false);
     }

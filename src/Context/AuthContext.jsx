@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import * as api from '../api/Api';
 
 const AuthContext = createContext();
 
@@ -11,19 +12,23 @@ export const AuthProvider = ({ children }) => {
     // Check for stored authentication on app start
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        const userData = localStorage.getItem('userData');
-        
-        if (token && userData) {
-          // Verify token with backend (if you have one)
-          setUser(JSON.parse(userData));
-          setIsAuthenticated(true);
+        // Use API's isAuthenticated utility
+        if (api.isAuthenticated()) {
+          // Get user profile from the API
+          const response = await api.getUserProfile();
+          
+          if (response.success) {
+            setUser(response.data);
+            setIsAuthenticated(true);
+          } else {
+            // If the token is invalid, clear everything
+            api.resetApiClient();
+          }
         }
       } catch (error) {
         console.error('Auth check failed:', error);
         // Clear invalid data
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userData');
+        api.resetApiClient();
       } finally {
         setIsLoading(false);
       }
@@ -35,25 +40,19 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      // Mock login - replace with actual API call
-      const mockUser = {
-        id: 1,
-        name: 'John Doe',
-        email: email,
-        role: 'user',
-        avatar: null
-      };
+      // Use the login API function
+      const response = await api.login({ email, password });
       
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
-      // Store in localStorage
-      localStorage.setItem('authToken', mockToken);
-      localStorage.setItem('userData', JSON.stringify(mockUser));
-      
-      setUser(mockUser);
-      setIsAuthenticated(true);
-      
-      return { success: true, user: mockUser };
+      if (response.success) {
+        setUser(response.data.user);
+        setIsAuthenticated(true);
+        return { success: true, user: response.data.user };
+      } else {
+        return { 
+          success: false, 
+          error: response.message || 'Login failed' 
+        };
+      }
     } catch (error) {
       console.error('Login failed:', error);
       return { success: false, error: error.message };
@@ -65,24 +64,20 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setIsLoading(true);
     try {
-      // Mock registration - replace with actual API call
-      const newUser = {
-        id: Date.now(),
-        name: userData.name,
-        email: userData.email,
-        role: 'user',
-        avatar: null
-      };
+      // Use the signup API function
+      const response = await api.signup(userData);
       
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
-      localStorage.setItem('authToken', mockToken);
-      localStorage.setItem('userData', JSON.stringify(newUser));
-      
-      setUser(newUser);
-      setIsAuthenticated(true);
-      
-      return { success: true, user: newUser };
+      if (response.success) {
+        // If signup includes automatic login
+        setUser(response.data.user);
+        setIsAuthenticated(true);
+        return { success: true, user: response.data.user };
+      } else {
+        return { 
+          success: false, 
+          error: response.message || 'Registration failed' 
+        };
+      }
     } catch (error) {
       console.error('Registration failed:', error);
       return { success: false, error: error.message };
@@ -91,22 +86,67 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    setUser(null);
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      // Use the logout API function
+      await api.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Reset state regardless of API success
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   };
 
   const updateProfile = async (userData) => {
     try {
-      const updatedUser = { ...user, ...userData };
-      localStorage.setItem('userData', JSON.stringify(updatedUser));
-      setUser(updatedUser);
-      return { success: true, user: updatedUser };
+      // Use the updateUserProfile API function
+      const response = await api.updateUserProfile(userData);
+      
+      if (response.success) {
+        setUser(response.data);
+        return { success: true, user: response.data };
+      } else {
+        return { 
+          success: false, 
+          error: response.message || 'Profile update failed' 
+        };
+      }
     } catch (error) {
       console.error('Profile update failed:', error);
       return { success: false, error: error.message };
+    }
+  };
+
+  const forgotPassword = async (email) => {
+    try {
+      // We'll need to implement this endpoint in the API
+      const response = await api.postData('/auth/forgot-password', { email });
+      return response;
+    } catch (error) {
+      console.error('Password reset request failed:', error);
+      return { 
+        success: false, 
+        error: error.message || 'Password reset request failed'
+      };
+    }
+  };
+
+  const resetPassword = async (token, newPassword) => {
+    try {
+      // We'll need to implement this endpoint in the API
+      const response = await api.postData('/auth/reset-password', { 
+        token, 
+        newPassword 
+      });
+      return response;
+    } catch (error) {
+      console.error('Password reset failed:', error);
+      return { 
+        success: false, 
+        error: error.message || 'Password reset failed'
+      };
     }
   };
 
@@ -117,7 +157,9 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    updateProfile
+    updateProfile,
+    forgotPassword,
+    resetPassword
   };
 
   return (

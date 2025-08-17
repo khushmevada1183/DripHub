@@ -3,7 +3,8 @@ import axios from "axios";
 // ==========================
 // ENVIRONMENT CONFIGURATION
 // ==========================
-const API_URL = import.meta.env.VITE_REACT_APP_URL || "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT || "10000", 10);
 
 // ==========================
 // AXIOS INSTANCE
@@ -11,7 +12,7 @@ const API_URL = import.meta.env.VITE_REACT_APP_URL || "http://localhost:3000/api
 const apiClient = axios.create({
   baseURL: API_URL,
   withCredentials: true,
-  timeout: 10000,
+  timeout: API_TIMEOUT,
   headers: {
     "Content-Type": "application/json",
   },
@@ -227,6 +228,20 @@ export const login = async (credentials) => {
  * @returns {Promise} - Registration response
  */
 export const signup = (userData) => postData("/signup", userData);
+
+/**
+ * Request password reset
+ * @param {Object} data - The email address
+ * @returns {Promise} - Password reset request response
+ */
+export const forgotPassword = (data) => postData("/auth/forgot-password", data);
+
+/**
+ * Reset password with token
+ * @param {Object} data - The reset token and new password
+ * @returns {Promise} - Password reset response
+ */
+export const resetPassword = (data) => postData("/auth/reset-password", data);
 
 /**
  * User logout
@@ -491,6 +506,8 @@ export default {
   signup,
   logout,
   refreshToken,
+  forgotPassword,
+  resetPassword,
   
   // Product methods
   getProducts,
