@@ -40,13 +40,27 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      // Use the login API function
-      const response = await api.login({ email, password });
+      // Use the login API function with username and password as shown in the API schema
+      const response = await api.login({ username: email, password });
       
       if (response.success) {
-        setUser(response.data.user);
-        setIsAuthenticated(true);
-        return { success: true, user: response.data.user };
+        // Consider login successful if we obtained an access token
+        const hasToken = !!(response.data?.accessToken || response.data?.access_token);
+        if (hasToken) {
+          setIsAuthenticated(true);
+          // Try to load the profile if available; don't fail login if it errors
+          try {
+            const profile = await api.getUserProfile();
+            if (profile.success) {
+              setUser(profile.data);
+              return { success: true, user: profile.data };
+            }
+          } catch (_) {
+            // ignore profile errors
+          }
+          return { success: true };
+        }
+        return { success: false, error: response.message || 'Login failed' };
       } else {
         return { 
           success: false, 
@@ -64,14 +78,29 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setIsLoading(true);
     try {
-      // Use the signup API function
-      const response = await api.signup(userData);
+      // Use the signup API function with email and password structure from API schema
+      const requestData = {
+        email: userData.email,
+        password: userData.password
+      };
+      
+      const response = await api.signup(requestData);
       
       if (response.success) {
-        // If signup includes automatic login
-        setUser(response.data.user);
-        setIsAuthenticated(true);
-        return { success: true, user: response.data.user };
+        // Some backends auto-login and return tokens; treat similarly to login
+        const hasToken = !!(response.data?.accessToken || response.data?.access_token);
+        if (hasToken) {
+          setIsAuthenticated(true);
+          try {
+            const profile = await api.getUserProfile();
+            if (profile.success) {
+              setUser(profile.data);
+              return { success: true, user: profile.data };
+            }
+          } catch (_) {}
+          return { success: true };
+        }
+        return { success: true };
       } else {
         return { 
           success: false, 
@@ -121,8 +150,8 @@ export const AuthProvider = ({ children }) => {
 
   const forgotPassword = async (email) => {
     try {
-      // We'll need to implement this endpoint in the API
-      const response = await api.postData('/auth/forgot-password', { email });
+      // Using the forgotPassword function from api
+      const response = await api.forgotPassword({ email });
       return response;
     } catch (error) {
       console.error('Password reset request failed:', error);
@@ -135,8 +164,8 @@ export const AuthProvider = ({ children }) => {
 
   const resetPassword = async (token, newPassword) => {
     try {
-      // We'll need to implement this endpoint in the API
-      const response = await api.postData('/auth/reset-password', { 
+      // Using the resetPassword function from api
+      const response = await api.resetPassword({ 
         token, 
         newPassword 
       });

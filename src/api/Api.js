@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // ==========================
 // ENVIRONMENT CONFIGURATION
@@ -11,11 +12,24 @@ const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT || "10000", 10);
 // ==========================
 const apiClient = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  // Important: Do NOT send cookies by default. When withCredentials=true and the
+  // server replies with Access-Control-Allow-Origin "*", browsers will block
+  // the response body, which shows up as "Failed to load response data" in DevTools.
+  // We'll enable credentials explicitly per-request only if ever needed.
+  withCredentials: false,
   timeout: API_TIMEOUT,
   headers: {
     "Content-Type": "application/json",
+    "Accept": "application/json",
   },
+  transformRequest: [function (data, headers) {
+    // Ensure data is properly serialized as JSON
+    if (data && typeof data === 'object') {
+      headers['Content-Type'] = 'application/json';
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
 });
 
 // ==========================
@@ -69,13 +83,24 @@ const processQueue = (error, token = null) => {
 };
 
 apiClient.interceptors.response.use(
-  (response) => ({
-    success: true,
-    data: response.data,
-    status: response.status,
-    message: response.data?.message || "Success",
-    error: null,
-  }),
+  (response) => {
+    const standardized = {
+      success: true,
+      data: response.data,
+      status: response.status,
+      message: response.data?.message || "Success",
+      error: null,
+    };
+
+    // Show success toast if backend provided a human-friendly message
+    if (standardized.message && typeof standardized.message === 'string') {
+      // Avoid toasting for GETs without explicit message
+      if (response.config?.method !== 'get' || response.data?.message) {
+        toast.success(standardized.message);
+      }
+    }
+    return standardized;
+  },
   async (error) => {
     const originalRequest = error.config;
 
@@ -126,13 +151,18 @@ apiClient.interceptors.response.use(
     }
 
     // Standardize error responses
-    return {
+    const standardizedError = {
       success: false,
       data: null,
       status: error.response?.status || 500,
       message: error.response?.data?.message || error.message || "An error occurred",
       error: error.response?.data || error.message,
     };
+    // Show error toast
+    if (standardizedError.message) {
+      toast.error(standardizedError.message);
+    }
+    return standardizedError;
   }
 );
 
@@ -201,13 +231,18 @@ export const deleteData = (endpoint, payload = null, config = {}) =>
  */
 export const login = async (credentials) => {
   try {
-    const response = await postData("/login", credentials);
+    // Updated to use the correct endpoint /api/auth/login
+    const response = await postData("/api/auth/login", credentials);
     
-    if (response.success && response.data?.accessToken) {
-      saveTokens({
-        accessToken: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
-      });
+    // Backend returns snake_case token keys (e.g., access_token)
+    if (response.success) {
+      const accessToken = response.data?.accessToken || response.data?.access_token;
+      const refreshToken = response.data?.refreshToken || response.data?.refresh_token;
+      if (accessToken) {
+        saveTokens({ accessToken, refreshToken });
+        // Also set Authorization header immediately for subsequent requests in this session
+        apiClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      }
     }
     
     return response;
@@ -227,21 +262,21 @@ export const login = async (credentials) => {
  * @param {Object} userData - User registration data
  * @returns {Promise} - Registration response
  */
-export const signup = (userData) => postData("/signup", userData);
+export const signup = (userData) => postData("/api/auth/register", userData);
 
 /**
  * Request password reset
  * @param {Object} data - The email address
  * @returns {Promise} - Password reset request response
  */
-export const forgotPassword = (data) => postData("/auth/forgot-password", data);
+export const forgotPassword = (data) => postData("/api/auth/forgot-password", data);
 
 /**
  * Reset password with token
  * @param {Object} data - The reset token and new password
  * @returns {Promise} - Password reset response
  */
-export const resetPassword = (data) => postData("/auth/reset-password", data);
+export const resetPassword = (data) => postData("/api/auth/reset-password", data);
 
 /**
  * User logout
@@ -249,7 +284,7 @@ export const resetPassword = (data) => postData("/auth/reset-password", data);
  */
 export const logout = async () => {
   try {
-    const response = await postData("/logout");
+    const response = await postData("/api/auth/logout");
     clearTokens();
     return response;
   } catch (error) {
@@ -268,7 +303,7 @@ export const logout = async () => {
  * Refresh access token
  * @returns {Promise} - Token refresh response
  */
-export const refreshToken = () => postData("/refresh", {
+export const refreshToken = () => postData("/api/auth/refresh", {
   refreshToken: getRefreshToken(),
 });
 
