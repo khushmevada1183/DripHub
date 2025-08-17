@@ -207,7 +207,7 @@ export const getImageUrl = (imagePath, size = 'medium') => {
 };
 
 export const generateImageAlt = (product) => {
-  return `${product.name} - ${product.brand || 'ShopHub'} | ${product.category || 'Product'}`;
+  return `${product.name} - ${product.brand || 'DripHub'} | ${product.category || 'Product'}`;
 };
 
 // Notification helpers

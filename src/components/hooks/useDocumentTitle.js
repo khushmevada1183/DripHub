@@ -9,7 +9,7 @@ export const useDocumentTitle = (title) => {
     
     // Cleanup: restore default title when component unmounts
     return () => {
-      document.title = 'ShopHub - Your Online Store';
+      document.title = 'DripHub - Your Online Store';
     };
   }, [title]);
 };

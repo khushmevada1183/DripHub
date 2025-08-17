@@ -100,7 +100,7 @@ const Footer = () => {
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">S</span>
                 </div>
-                <span className="text-xl font-bold">ShopHub</span>
+                <span className="text-xl font-bold">DripHub</span>
               </Link>
               <p className="text-gray-400 mb-6 leading-relaxed">
                 Your one-stop destination for quality products at unbeatable prices. 
@@ -147,7 +147,7 @@ const Footer = () => {
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
               {/* Copyright */}
               <div className="text-gray-400 text-sm">
-                © 2024 ShopHub. All rights reserved.
+                © 2024 DripHub. All rights reserved.
               </div>
 
               {/* Legal Links */}

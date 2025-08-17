@@ -12,10 +12,10 @@ export const ROUTE_PATHS = {
   SEARCH: '/search',
   
   // Authentication Routes
-  LOGIN: '/auth/login',
-  REGISTER: '/auth/register',
-  FORGOT_PASSWORD: '/auth/forgot-password',
-  RESET_PASSWORD: '/auth/reset-password',
+  LOGIN: '/login',
+  REGISTER: '/signup',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
   
   // User Account Routes
   ACCOUNT: '/account',
@@ -52,7 +52,7 @@ export const ROUTES_CONFIG = [
     component: 'Home',
     layout: 'MainLayout',
     meta: {
-      title: 'ShopHub - Your Online Store',
+      title: 'DripHub - Your Online Store',
       description: 'Discover amazing products at unbeatable prices',
       keywords: 'ecommerce, shopping, deals',
       requiresAuth: false,
@@ -66,7 +66,7 @@ export const ROUTES_CONFIG = [
     component: 'Products',
     layout: 'MainLayout',
     meta: {
-      title: 'All Products - ShopHub',
+      title: 'All Products - DripHub',
       description: 'Browse our complete product catalog',
       requiresAuth: false,
       showInNav: true,
@@ -79,7 +79,7 @@ export const ROUTES_CONFIG = [
     component: 'ProductDetails',
     layout: 'MainLayout',
     meta: {
-      title: 'Product Details - ShopHub',
+      title: 'Product Details - DripHub',
       description: 'View detailed product information',
       requiresAuth: false,
       showInNav: false,
@@ -92,7 +92,7 @@ export const ROUTES_CONFIG = [
     component: 'Categories',
     layout: 'MainLayout',
     meta: {
-      title: 'Categories - ShopHub',
+      title: 'Categories - DripHub',
       description: 'Shop by product categories',
       requiresAuth: false,
       showInNav: true,
@@ -105,7 +105,7 @@ export const ROUTES_CONFIG = [
     component: 'Category',
     layout: 'MainLayout',
     meta: {
-      title: 'Category - ShopHub',
+      title: 'Category - DripHub',
       description: 'Products in this category',
       requiresAuth: false,
       showInNav: false,
@@ -118,7 +118,7 @@ export const ROUTES_CONFIG = [
     component: 'Deals',
     layout: 'MainLayout',
     meta: {
-      title: 'Today\'s Deals - ShopHub',
+      title: 'Today\'s Deals - DripHub',
       description: 'Special offers and discounts',
       requiresAuth: false,
       showInNav: true,
@@ -131,7 +131,7 @@ export const ROUTES_CONFIG = [
     component: 'Search',
     layout: 'MainLayout',
     meta: {
-      title: 'Search Results - ShopHub',
+      title: 'Search Results - DripHub',
       description: 'Search results for your query',
       requiresAuth: false,
       showInNav: false,
@@ -144,7 +144,7 @@ export const ROUTES_CONFIG = [
     component: 'Login',
     layout: 'AuthLayout',
     meta: {
-      title: 'Login - ShopHub',
+      title: 'Login - DripHub',
       description: 'Sign in to your account',
       requiresAuth: false,
       redirectIfAuth: ROUTE_PATHS.HOME,
@@ -158,12 +158,26 @@ export const ROUTES_CONFIG = [
     component: 'Register',
     layout: 'AuthLayout',
     meta: {
-      title: 'Register - ShopHub',
+      title: 'Sign Up - DripHub',
       description: 'Create a new account',
       requiresAuth: false,
       redirectIfAuth: ROUTE_PATHS.HOME,
       showInNav: false,
-      breadcrumb: ['Home', 'Register']
+      breadcrumb: ['Home', 'Sign Up']
+    }
+  },
+  {
+    path: ROUTE_PATHS.FORGOT_PASSWORD,
+    name: 'ForgotPassword',
+    component: 'ForgotPassword',
+    layout: 'AuthLayout',
+    meta: {
+      title: 'Forgot Password - DripHub',
+      description: 'Reset your password',
+      requiresAuth: false,
+      redirectIfAuth: ROUTE_PATHS.HOME,
+      showInNav: false,
+      breadcrumb: ['Home', 'Forgot Password']
     }
   },
   {
@@ -172,7 +186,7 @@ export const ROUTES_CONFIG = [
     component: 'Cart',
     layout: 'MainLayout',
     meta: {
-      title: 'Shopping Cart - ShopHub',
+      title: 'Shopping Cart - DripHub',
       description: 'Review your cart items',
       requiresAuth: false,
       showInNav: false,
@@ -185,7 +199,7 @@ export const ROUTES_CONFIG = [
     component: 'Checkout',
     layout: 'CheckoutLayout',
     meta: {
-      title: 'Checkout - ShopHub',
+      title: 'Checkout - DripHub',
       description: 'Complete your purchase',
       requiresAuth: true,
       redirectUnauth: ROUTE_PATHS.LOGIN,
@@ -199,7 +213,7 @@ export const ROUTES_CONFIG = [
     component: 'Wishlist',
     layout: 'MainLayout',
     meta: {
-      title: 'Wishlist - ShopHub',
+      title: 'Wishlist - DripHub',
       description: 'Your saved items',
       requiresAuth: true,
       redirectUnauth: ROUTE_PATHS.LOGIN,
@@ -213,7 +227,7 @@ export const ROUTES_CONFIG = [
     component: 'Account',
     layout: 'AccountLayout',
     meta: {
-      title: 'My Account - ShopHub',
+      title: 'My Account - DripHub',
       description: 'Manage your account',
       requiresAuth: true,
       redirectUnauth: ROUTE_PATHS.LOGIN,
@@ -227,7 +241,7 @@ export const ROUTES_CONFIG = [
     component: 'Profile',
     layout: 'AccountLayout',
     meta: {
-      title: 'Profile - ShopHub',
+      title: 'Profile - DripHub',
       description: 'Edit your profile information',
       requiresAuth: true,
       redirectUnauth: ROUTE_PATHS.LOGIN,
@@ -241,7 +255,7 @@ export const ROUTES_CONFIG = [
     component: 'Orders',
     layout: 'AccountLayout',
     meta: {
-      title: 'My Orders - ShopHub',
+      title: 'My Orders - DripHub',
       description: 'View your order history',
       requiresAuth: true,
       redirectUnauth: ROUTE_PATHS.LOGIN,
@@ -255,7 +269,7 @@ export const ROUTES_CONFIG = [
     component: 'NotFound',
     layout: 'ErrorLayout',
     meta: {
-      title: 'Page Not Found - ShopHub',
+      title: 'Page Not Found - DripHub',
       description: 'The page you\'re looking for doesn\'t exist',
       requiresAuth: false,
       showInNav: false,

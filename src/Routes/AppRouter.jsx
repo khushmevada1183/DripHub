@@ -18,8 +18,8 @@ const LazyComponents = {
   
   // Authentication Pages
   Login: lazy(() => import('../Pages/Auth/Login')),
-  Register: lazy(() => import('../Pages/Auth/Register')),
-  ForgotPassword: lazy(() => import('../Pages/Auth/Login')), // Placeholder
+  Register: lazy(() => import('../Pages/Auth/SignUp')),
+  ForgotPassword: lazy(() => import('../Pages/Auth/ForgotPassword')),
   
   // Shopping Pages
   Cart: lazy(() => import('../Pages/Cart/Cart')),
@@ -90,7 +90,6 @@ export const AppRouter = () => {
       ))}
       
       {/* Redirect routes */}
-      <Route path="/auth" element={<Navigate to={ROUTE_PATHS.LOGIN} replace />} />
       <Route path="/profile" element={<Navigate to={ROUTE_PATHS.PROFILE} replace />} />
       
       {/* Catch-all route for 404 */}

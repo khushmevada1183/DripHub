@@ -1,6 +1,6 @@
 # Components Library
 
-This folder contains reusable UI components, hooks, and utilities for the ShopHub e-commerce project.
+This folder contains reusable UI components, hooks, and utilities for the DripHub e-commerce project.
 
 ## 📁 Structure
 
@@ -162,4 +162,4 @@ const slug = slugify('Product Name Here'); // "product-name-here"
 6. **Developer Experience** - Clear APIs and comprehensive documentation
 7. **Type Safety** - Consistent prop interfaces
 
-This unified components library eliminates the confusion between multiple folders and provides a clean, scalable architecture for the ShopHub application.
+This unified components library eliminates the confusion between multiple folders and provides a clean, scalable architecture for the DripHub application.

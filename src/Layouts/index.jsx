@@ -26,29 +26,11 @@ export const MainLayout = ({ children }) => {
   );
 };
 
-// 🔐 Auth Layout for login/register pages (minimal header)
+// 🔐 Auth Layout for login/signup pages (full screen design)
 export const AuthLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col">
-      {/* Simple header for auth pages */}
-      <header className="w-full bg-white shadow-sm">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">ShopHub</span>
-            </div>
-          </div>
-        </div>
-      </header>
-      
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div className="w-full max-w-md">
-          {children || <Outlet />}
-        </div>
-      </main>
+    <div className="min-h-screen w-full">
+      {children || <Outlet />}
     </div>
   );
 };
@@ -63,9 +45,9 @@ export const CheckoutLayout = ({ children }) => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
+                <span className="text-white font-bold text-sm">D</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">ShopHub</span>
+              <span className="text-xl font-bold text-gray-900">DripHub</span>
             </div>
             <div className="text-sm text-gray-500">
               Secure Checkout 🔒
@@ -119,9 +101,9 @@ export const ErrorLayout = ({ children }) => {
           <div className="flex items-center h-16">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
+                <span className="text-white font-bold text-sm">D</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">ShopHub</span>
+              <span className="text-xl font-bold text-gray-900">DripHub</span>
             </div>
           </div>
         </div>

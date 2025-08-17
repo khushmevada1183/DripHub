@@ -27,7 +27,7 @@ const Header = () => {
               <span className="text-white font-bold text-xl">S</span>
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-              ShopHub
+              DripHub
             </div>
           </Link>
 
@@ -133,7 +133,7 @@ const Header = () => {
             <input
               type="text"
               className="flex-1 px-4 py-3 focus:outline-none text-gray-700 placeholder-gray-400"
-              placeholder="Search ShopHub"
+              placeholder="Search DripHub"
             />
             <button className="bg-gradient-to-r from-orange-500 to-red-500 px-4 py-3 rounded-r-2xl text-white">
               <MagnifyingGlassIcon className="h-5 w-5" />

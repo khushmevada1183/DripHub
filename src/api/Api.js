@@ -20,8 +20,8 @@ const apiClient = axios.create({
 // ==========================
 // TOKEN MANAGEMENT
 // ==========================
-const TOKEN_KEY = "shophub_token";
-const REFRESH_TOKEN_KEY = "shophub_refresh_token";
+const TOKEN_KEY = "driphub_token";
+const REFRESH_TOKEN_KEY = "driphub_refresh_token";
 
 const getAccessToken = () => localStorage.getItem(TOKEN_KEY);
 const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
@@ -200,7 +200,7 @@ export const deleteData = (endpoint, payload = null, config = {}) =>
  */
 export const login = async (credentials) => {
   try {
-    const response = await postData("/auth/login", credentials);
+    const response = await postData("/login", credentials);
     
     if (response.success && response.data?.accessToken) {
       saveTokens({
@@ -226,7 +226,7 @@ export const login = async (credentials) => {
  * @param {Object} userData - User registration data
  * @returns {Promise} - Registration response
  */
-export const signup = (userData) => postData("/auth/signup", userData);
+export const signup = (userData) => postData("/signup", userData);
 
 /**
  * User logout
@@ -234,7 +234,7 @@ export const signup = (userData) => postData("/auth/signup", userData);
  */
 export const logout = async () => {
   try {
-    const response = await postData("/auth/logout");
+    const response = await postData("/logout");
     clearTokens();
     return response;
   } catch (error) {
@@ -253,7 +253,7 @@ export const logout = async () => {
  * Refresh access token
  * @returns {Promise} - Token refresh response
  */
-export const refreshToken = () => postData("/auth/refresh", {
+export const refreshToken = () => postData("/refresh", {
   refreshToken: getRefreshToken(),
 });
 

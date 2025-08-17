@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import { ROUTE_PATHS } from '../../Routes/routes.config';
 
-const Register = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -108,8 +108,8 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Register Card */}
-        {/* Register Card */}
+        {/* Sign Up Card */}
+        {/* Sign Up Card */}
         <div className="w-full sm:w-1/2 lg:w-2/5 max-w-md sm:max-w-lg flex justify-center items-center">
           <div className="bg-white w-full rounded-2xl shadow-2xl p-6 sm:p-8 m-[15px] max-h-[calc(100vh-30px)] overflow-y-auto">
           {/* Header Icons */}
@@ -133,18 +133,28 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Register Title */}
+          {/* Sign Up Title */}
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="bg-red-50 border-l-4 border-l-red-500 border border-red-200 rounded-lg p-4 mb-6 flex items-center shadow-sm">
+              <div className="text-red-500 mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-medium text-red-700 text-sm sm:text-base">{error}</p>
+                {error.includes('Passwords do not match') && (
+                  <p className="text-red-600 text-xs mt-1">Please make sure both password fields contain the same value.</p>
+                )}
+              </div>
             </div>
           )}
 
-          {/* Register Form */}
+          {/* Sign Up Form */}
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -239,8 +249,8 @@ const Register = () => {
 
           {/* Social Login Buttons - Grid Layout */}
           <div className="mt-4">
-            <p className="text-center text-gray-500 text-xs mb-3">OR REGISTER WITH</p>
-            <div className="grid grid-cols-3 gap-3">
+            <p className="text-center text-gray-500 text-xs mb-3">OR SIGN UP WITH</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => handleSocialLogin('google')}
@@ -269,7 +279,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => handleSocialLogin('facebook')}
-                className="flex flex-col items-center justify-center px-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                className="flex flex-col items-center justify-center px-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200 col-span-2 sm:col-span-1"
               >
                 <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -297,4 +307,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

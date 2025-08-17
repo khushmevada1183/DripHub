@@ -1,4 +1,4 @@
-# ShopHub E-commerce Website
+# DripHub E-commerce Website
 
 A modern e-commerce website built with React, Vite, and Tailwind CSS. This project provides a complete shopping experience with features like product browsing, cart management, and user authentication.
 
@@ -23,8 +23,8 @@ Before running this project, make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/khushmevada1183/ecommerce_shophub.git
-   cd ecommerce_shophub
+   git clone https://github.com/khushmevada1183/ecommerce_driphub.git
+   cd ecommerce_driphub
    ```
 
 2. Install dependencies:
@@ -65,7 +65,7 @@ Before running this project, make sure you have the following installed:
 ## 🎨 Project Structure
 
 ```
-ecommerce_shophub/
+ecommerce_driphub/
 ├── src/
 │   ├── Components/     # React components
 │   ├── Context/        # React context providers
@@ -96,4 +96,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Khush Mevada - khushmevada1183@gmail.com
 
-Project Link: [https://github.com/khushmevada1183/ecommerce_shophub](https://github.com/khushmevada1183/ecommerce_shophub)
+Project Link: [https://github.com/khushmevada1183/ecommerce_driphub](https://github.com/khushmevada1183/ecommerce_driphub)
