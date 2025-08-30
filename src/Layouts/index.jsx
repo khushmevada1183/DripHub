@@ -7,12 +7,12 @@ import { m, fadeIn, viewport } from '../animation/motion';
 // 🏗️ Main Layout for most pages (with header, subheader, footer)
 export const MainLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 w-full flex flex-col">
+    <div className="[min-height:100vh] [background-color:#f9fafb] [color:#111827] [width:100%] [display:flex] [flex-direction:column]">
       <Header />
       <Subheader />
       
       <m.main
-        className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8"
+        className="[flex:1] [width:100%] [padding:32px_16px] sm:[padding:32px_24px] lg:[padding:32px_32px]"
         initial="hidden"
         whileInView="show"
         variants={fadeIn('up', 0, 0.5, 12)}
@@ -29,7 +29,7 @@ export const MainLayout = ({ children }) => {
 // 🔐 Auth Layout for login/signup pages (full screen design)
 export const AuthLayout = ({ children }) => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="[min-height:100vh] [width:100%]">
       {children || <Outlet />}
     </div>
   );
@@ -38,78 +38,63 @@ export const AuthLayout = ({ children }) => {
 // 🛒 Checkout Layout (focused on conversion)
 export const CheckoutLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-white text-gray-900 w-full flex flex-col">
+    <div className="[min-height:100vh] [background-color:white] [color:#111827] [width:100%] [display:flex] [flex-direction:column]">
       {/* Minimal header for checkout */}
-      <header className="w-full bg-white border-b">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">D</span>
+      <header className="[width:100%] [background-color:white] [border-bottom:1px_solid_#e5e7eb]">
+        <div className="[width:100%] [padding:0_16px] sm:[padding:0_24px] lg:[padding:0_32px]">
+          <div className="[display:flex] [align-items:center] [justify-content:space-between] [height:64px]">
+            <div className="[display:flex] [align-items:center] [gap:12px]">
+              <div className="[width:32px] [height:32px] [background-color:#2563eb] [border-radius:8px] [display:flex] [align-items:center] [justify-content:center]">
+                <span className="[color:white] [font-weight:700] [font-size:0.875rem]">D</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">DripHub</span>
+              <span className="[font-size:1.25rem] [font-weight:700] [color:#111827]">DripHub</span>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="[font-size:0.875rem] [color:#6b7280]">
               Secure Checkout 🔒
             </div>
           </div>
         </div>
       </header>
       
-      <main className="flex-1 w-full">
+      <main className="[flex:1] [width:100%]">
         {children || <Outlet />}
       </main>
     </div>
   );
 };
 
-// 👤 Account Layout (with account sidebar)
+// 👤 Account Layout (for profile, orders, etc.)
 export const AccountLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 w-full flex flex-col">
+    <div className="[min-height:100vh] [background-color:#f9fafb] [color:#111827] [width:100%] [display:flex] [flex-direction:column]">
       <Header />
-      <Subheader />
-      
-      <div className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Account Sidebar */}
-            <aside className="lg:col-span-1">
-              <AccountSidebar />
-            </aside>
-            
-            {/* Main Content */}
-            <main className="lg:col-span-3">
-              {children || <Outlet />}
-            </main>
-          </div>
-        </div>
+      <div className="[flex:1] [width:100%] [display:flex] [max-width:1280px] [margin:0_auto] [padding:24px_16px] sm:[padding:24px] lg:[padding:32px]">
+        {/* Sidebar */}
+        <AccountSidebar />
+        
+        {/* Main content */}
+        <main className="[flex:1] [padding-left:32px]">
+          {children || <Outlet />}
+        </main>
       </div>
-      
       <Footer />
     </div>
   );
 };
 
-// 🚨 Error Layout (for error pages)
+// ❌ Error Layout (404, 500, etc.)
 export const ErrorLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Simple header */}
-      <header className="w-full bg-white shadow-sm">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">D</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900">DripHub</span>
-            </div>
-          </div>
+    <div className="[min-height:100vh] [background:linear-gradient(135deg,#f3f4f6_0%,#e5e7eb_100%)] [color:#111827] [width:100%] [display:flex] [flex-direction:column] [align-items:center] [justify-content:center] [padding:24px]">
+      {/* Minimal header */}
+      <div className="[position:absolute] [top:24px] [left:24px] [display:flex] [align-items:center] [gap:12px]">
+        <div className="[width:32px] [height:32px] [background-color:#2563eb] [border-radius:8px] [display:flex] [align-items:center] [justify-content:center]">
+          <span className="[color:white] [font-weight:700] [font-size:0.875rem]">D</span>
         </div>
-      </header>
+        <span className="[font-size:1.25rem] [font-weight:700] [color:#111827]">DripHub</span>
+      </div>
       
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <main className="[max-width:512px] [width:100%] [text-align:center]">
         {children || <Outlet />}
       </main>
     </div>
@@ -118,29 +103,30 @@ export const ErrorLayout = ({ children }) => {
 
 // 📱 Account Sidebar Component
 const AccountSidebar = () => {
-  const menuItems = [
-    { href: '/account', label: 'Dashboard', icon: '📊' },
-    { href: '/account/profile', label: 'Profile', icon: '👤' },
-    { href: '/account/orders', label: 'Orders', icon: '📦' },
-    { href: '/account/addresses', label: 'Addresses', icon: '📍' },
-    { href: '/account/settings', label: 'Settings', icon: '⚙️' },
+  const navigation = [
+    { name: 'Profile', href: '/account/profile', icon: '�' },
+    { name: 'Orders', href: '/account/orders', icon: '�' },
+    { name: 'Wishlist', href: '/account/wishlist', icon: '❤️' },
+    { name: 'Addresses', href: '/account/addresses', icon: '📍' },
+    { name: 'Payment Methods', href: '/account/payments', icon: '💳' },
+    { name: 'Settings', href: '/account/settings', icon: '⚙️' },
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">My Account</h2>
-      <nav className="space-y-2">
-        {menuItems.map((item) => (
+    <aside className="[width:256px] [background-color:white] [border-radius:12px] [padding:24px] [height:fit-content] [box-shadow:0_1px_3px_rgba(0,0,0,0.1)]">
+      <h2 className="[font-size:1.125rem] [font-weight:600] [color:#111827] [margin-bottom:16px]">Account</h2>
+      <nav className="[display:flex] [flex-direction:column] [gap:4px]">
+        {navigation.map((item) => (
           <a
-            key={item.href}
+            key={item.name}
             href={item.href}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+            className="[display:flex] [align-items:center] [gap:12px] [padding:12px_16px] [border-radius:8px] [color:#6b7280] [text-decoration:none] [transition:all_0.2s] hover:[background-color:#f3f4f6] hover:[color:#111827]"
           >
-            <span className="text-lg">{item.icon}</span>
-            <span className="font-medium">{item.label}</span>
+            <span>{item.icon}</span>
+            {item.name}
           </a>
         ))}
       </nav>
-    </div>
+    </aside>
   );
 };

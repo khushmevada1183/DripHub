@@ -70,34 +70,34 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full space-y-12">
+    <div className="[width:100%] [display:flex] [flex-direction:column] [gap:48px]">
       {/* Hero Section */}
       <m.section
-        className="relative py-20 px-4 sm:px-6 lg:px-8 rounded-2xl bg-gradient-to-br from-[#121212] to-[#1E1E1E] w-full"
+        className="relative [padding:80px_16px] sm:[padding:80px_24px] lg:[padding:80px_32px] [border-radius:16px] [background:linear-gradient(to_bottom_right,#2563eb,#9333ea)] [width:100%]"
         initial="hidden"
         whileInView="show"
         variants={staggerContainer(0.12, 0.1)}
         viewport={viewport}
       >
-        <m.div className="max-w-3xl w-full" variants={fadeIn('up', 0, 0.6, 18)}>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+        <m.div className="[max-width:768px] [width:100%]" variants={fadeIn('up', 0, 0.6, 18)}>
+          <h1 className="[font-size:2.25rem] md:[font-size:3.75rem] [font-weight:700] [margin-bottom:24px] [color:white]">
             Discover Amazing Deals
           </h1>
-          <m.p className="text-xl mb-8 text-gray-300" variants={fadeIn('up', 0.05)}>
+          <m.p className="[font-size:1.25rem] [margin-bottom:32px] [color:rgba(255,255,255,0.9)]" variants={fadeIn('up', 0.05)}>
             Shop the latest products at unbeatable prices. Free shipping on orders over $50!
           </m.p>
-          <m.div className="flex gap-4" variants={fadeIn('up', 0.1)}>
+          <m.div className="[display:flex] [gap:16px]" variants={fadeIn('up', 0.1)}>
             <Button 
               variant="primary" 
               size="lg"
-              className="bg-teal-500 hover:bg-teal-600"
+              className="[background-color:white] hover:[background-color:#f9fafb] [color:#2563eb]"
             >
               Shop Now
             </Button>
             <Button 
               variant="secondary" 
               size="lg"
-              className="bg-[#1E1E1E] hover:bg-[#2E2E2E] text-white"
+              className="[background-color:#3b82f6] hover:[background-color:#2563eb] [color:white] [border:1px_solid_rgba(255,255,255,0.2)]"
             >
               View Deals
             </Button>
@@ -106,34 +106,34 @@ const Home = () => {
       </m.section>
 
       {/* Categories */}
-      <section className="bg-[#1E1E1E] rounded-2xl p-4 sm:p-6 lg:p-8 w-full" data-aos="fade-up">
-        <h2 className="text-2xl font-bold mb-8 text-white">Shop by Category</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+      <section className="[background-color:white] [border-radius:16px] [padding:16px] sm:[padding:24px] lg:[padding:32px] [width:100%] [box-shadow:0_1px_3px_rgba(0,0,0,0.1)]" data-aos="fade-up">
+        <h2 className="[font-size:1.5rem] [font-weight:700] [margin-bottom:32px] [color:#111827]">Shop by Category</h2>
+        <div className="[display:grid] [grid-template-columns:repeat(2,1fr)] sm:[grid-template-columns:repeat(3,1fr)] md:[grid-template-columns:repeat(4,1fr)] lg:[grid-template-columns:repeat(6,1fr)] xl:[grid-template-columns:repeat(8,1fr)] [gap:16px]">
           {categories.map((category) => (
             <m.div
               key={category.name}
-              className="bg-[#121212] rounded-xl p-6 text-center hover:bg-[#2E2E2E] transition-colors cursor-pointer"
+              className="[background-color:#f9fafb] [border-radius:12px] [padding:24px] [text-align:center] hover:[background-color:#eff6ff] hover:[box-shadow:0_4px_6px_rgba(0,0,0,0.1)] [transition:all_0.3s] [cursor:pointer] [border:1px_solid_#f3f4f6]"
               initial="hidden"
               whileInView="show"
               variants={scaleIn(0, 0.35, 0.95)}
               viewport={viewport}
             >
-              <span className="text-4xl mb-2 block">{category.icon}</span>
-              <h3 className="text-sm font-medium text-gray-200">{category.name}</h3>
+              <span className="[font-size:2.25rem] [margin-bottom:8px] [display:block]">{category.icon}</span>
+              <h3 className="[font-size:0.875rem] [font-weight:500] [color:#374151]">{category.name}</h3>
             </m.div>
           ))}
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="w-full">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-white">Featured Products</h2>
-          <Link to="/products" className="text-teal-400 hover:text-teal-300">
+      <section className="[width:100%]">
+        <div className="[display:flex] [justify-content:space-between] [align-items:center] [margin-bottom:32px]">
+          <h2 className="[font-size:1.5rem] [font-weight:700] [color:#111827]">Featured Products</h2>
+          <Link to="/products" className="[color:#2563eb] hover:[color:#3b82f6]">
             View All
           </Link>
         </div>
-        <m.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full" initial="hidden" whileInView="show" variants={staggerContainer(0.1)} viewport={viewport}>
+        <m.div className="[display:grid] [grid-template-columns:1fr] sm:[grid-template-columns:repeat(2,1fr)] lg:[grid-template-columns:repeat(3,1fr)] xl:[grid-template-columns:repeat(4,1fr)] 2xl:[grid-template-columns:repeat(5,1fr)] [gap:24px] [width:100%]" initial="hidden" whileInView="show" variants={staggerContainer(0.1)} viewport={viewport}>
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -141,35 +141,34 @@ const Home = () => {
               onAddToCart={addToCart}
               onToggleWishlist={addToWishlist}
               isInWishlist={false}
-              className="bg-[#1E1E1E] hover:transform hover:scale-105 transition-all duration-300"
-              theme="dark"
+              className="[background-color:white] hover:[transform:scale(1.05)] [transition:all_0.3s] [box-shadow:0_1px_3px_rgba(0,0,0,0.1)] [border:1px_solid_#f3f4f6]"
             />
           ))}
         </m.div>
       </section>
 
       {/* Deal of the Day */}
-  <section className="bg-[#1E1E1E] rounded-2xl p-4 sm:p-6 lg:p-8 w-full" data-aos="fade-up">
-        <div className="flex flex-col lg:flex-row items-center gap-8">
-          <div className="flex-1 w-full">
-            <h2 className="text-2xl font-bold mb-4 text-white">Deal of the Day</h2>
-            <h3 className="text-xl font-semibold mb-2 text-teal-400">50% OFF</h3>
-            <p className="text-gray-300 mb-4">
+  <section className="[background:linear-gradient(to_right,#f97316,#ef4444)] [border-radius:16px] [padding:16px] sm:[padding:24px] lg:[padding:32px] [width:100%] [box-shadow:0_10px_25px_rgba(0,0,0,0.15)]" data-aos="fade-up">
+        <div className="[display:flex] [flex-direction:column] lg:[flex-direction:row] [align-items:center] [gap:32px]">
+          <div className="[flex:1] [width:100%]">
+            <h2 className="[font-size:1.5rem] [font-weight:700] [margin-bottom:16px] [color:white]">Deal of the Day</h2>
+            <h3 className="[font-size:1.25rem] [font-weight:600] [margin-bottom:8px] [color:#fef3c7]">50% OFF</h3>
+            <p className="[color:rgba(255,255,255,0.9)] [margin-bottom:16px]">
               Limited time offer on selected electronics. Don't miss out on these amazing deals!
             </p>
             <Button 
               variant="primary"
               size="md"
-              className="bg-teal-500 hover:bg-teal-600"
+              className="[background-color:white] hover:[background-color:#f9fafb] [color:#f97316]"
             >
               Shop Now
             </Button>
           </div>
-          <div className="flex-1 flex justify-center w-full">
+          <div className="[flex:1] [display:flex] [justify-content:center] [width:100%]">
             <img
               src="https://via.placeholder.com/400x300"
               alt="Deal of the Day"
-              className="rounded-lg max-w-full h-auto"
+              className="[border-radius:8px] [max-width:100%] [height:auto] [box-shadow:0_10px_25px_rgba(0,0,0,0.15)]"
             />
           </div>
         </div>

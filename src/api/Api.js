@@ -4,12 +4,14 @@ import toast from "react-hot-toast";
 // ==========================
 // ENVIRONMENT CONFIGURATION
 // ==========================
+
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT || "10000", 10);
 
 // ==========================
 // AXIOS INSTANCE
 // ==========================
+
 const apiClient = axios.create({
   baseURL: API_URL,
   // Important: Do NOT send cookies by default. When withCredentials=true and the
@@ -23,7 +25,7 @@ const apiClient = axios.create({
     "Accept": "application/json",
   },
   transformRequest: [function (data, headers) {
-    // Ensure data is properly serialized as JSON
+    // Ensure data is properly serialized as JSONl
     if (data && typeof data === 'object') {
       headers['Content-Type'] = 'application/json';
       return JSON.stringify(data);

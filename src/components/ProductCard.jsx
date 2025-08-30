@@ -17,8 +17,8 @@ const ProductCard = ({
   const displayName = name || title;
   
   const themeClasses = {
-    light: 'bg-white border-gray-200 text-gray-900',
-    dark: 'bg-gray-800 border-gray-700 text-white'
+    light: '[background-color:white] [border-color:#e5e7eb] [color:#111827]',
+    dark: '[background-color:#1f2937] [border-color:#374151] [color:white]'
   };
 
   const handleAddToCart = (e) => {
@@ -35,72 +35,72 @@ const ProductCard = ({
 
   return (
     <div className={`
-      group relative border rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300
+      group [position:relative] [border:1px_solid] [border-radius:12px] [overflow:hidden] [box-shadow:0_1px_2px_rgba(0,0,0,0.05)] hover:[box-shadow:0_4px_6px_rgba(0,0,0,0.1)] [transition:all_0.3s]
       ${themeClasses[theme]}
       ${className}
     `}>
-      <Link to={`/products/${id}`} className="block">
+      <Link to={`/products/${id}`} className="[display:block]">
         {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden bg-gray-100">
+        <div className="[position:relative] [aspect-ratio:1] [overflow:hidden] [background-color:#f3f4f6]">
           <img
             src={image}
             alt={displayName}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="[width:100%] [height:100%] [object-fit:cover] group-hover:[transform:scale(1.05)] [transition:transform_0.3s]"
             loading="lazy"
           />
           
           {/* Wishlist Button */}
           <button
             onClick={handleToggleWishlist}
-            className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white shadow-sm transition-all duration-200"
+            className="[position:absolute] [top:12px] [right:12px] [padding:8px] [border-radius:50%] [background-color:rgba(255,255,255,0.8)] hover:[background-color:white] [box-shadow:0_1px_2px_rgba(0,0,0,0.05)] [transition:all_0.2s]"
           >
             {isInWishlist ? (
-              <HeartSolid className="h-5 w-5 text-red-500" />
+              <HeartSolid className="[height:20px] [width:20px] [color:#ef4444]" />
             ) : (
-              <HeartIcon className="h-5 w-5 text-gray-600 hover:text-red-500" />
+              <HeartIcon className="[height:20px] [width:20px] [color:#6b7280] hover:[color:#ef4444]" />
             )}
           </button>
 
           {/* Category Badge */}
           {category && (
-            <div className="absolute top-3 left-3 px-2 py-1 bg-orange-500 text-white text-xs font-medium rounded-md">
+            <div className="[position:absolute] [top:12px] [left:12px] [padding:4px_8px] [background-color:#f97316] [color:white] [font-size:0.75rem] [font-weight:500] [border-radius:6px]">
               {category}
             </div>
           )}
         </div>
 
         {/* Product Info */}
-        <div className="p-4">
-          <h3 className="font-semibold text-sm mb-2 line-clamp-2 group-hover:text-orange-500 transition-colors">
+        <div className="[padding:16px]">
+          <h3 className="[font-weight:600] [font-size:0.875rem] [margin-bottom:8px] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] [overflow:hidden] group-hover:[color:#f97316] [transition:color_0.2s]">
             {displayName}
           </h3>
           
           {rating && (
-            <div className="mb-2">
+            <div className="[margin-bottom:8px]">
               <StarRating value={rating.rate} readonly size="sm" />
-              <span className="text-xs text-gray-500 ml-1">
+              <span className="[font-size:0.75rem] [color:#6b7280] [margin-left:4px]">
                 ({rating.count})
               </span>
             </div>
           )}
 
           {description && (
-            <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+            <p className="[font-size:0.875rem] [color:#6b7280] [margin-bottom:12px] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] [overflow:hidden]">
               {description}
             </p>
           )}
 
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-orange-600">
+          <div className="[display:flex] [align-items:center] [justify-content:space-between]">
+            <span className="[font-size:1.125rem] [font-weight:700] [color:#ea580c]">
               ${price}
             </span>
             
             <Button
               size="sm"
               onClick={handleAddToCart}
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="[opacity:0] group-hover:[opacity:1] [transition:opacity_0.2s]"
             >
-              <ShoppingCartIcon className="h-4 w-4 mr-1" />
+              <ShoppingCartIcon className="[height:16px] [width:16px] [margin-right:4px]" />
               Add
             </Button>
           </div>

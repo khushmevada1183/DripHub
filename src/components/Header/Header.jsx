@@ -17,26 +17,27 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50 w-full">
+    <header className="[background-color:white] [box-shadow:0_1px_2px_rgba(0,0,0,0.05)] [border-bottom:1px_solid_#f3f4f6] [position:sticky] [top:0] [z-index:50] [width:100%]">
       {/* Top Header Bar */}
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="[width:100%] [padding:0_16px] sm:[padding:0_24px] lg:[padding:0_32px]">
+        <div className="[display:flex] [align-items:center] [justify-content:space-between] [height:80px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-              <span className="text-white font-bold text-xl">S</span>
-            </div>
-            <div className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-              DripHub
-            </div>
+          <Link to="/" className="[display:flex] [align-items:center] [gap:12px] group">
+            <img 
+              src="/src/assets/svg/DripHublogo.svg" 
+              alt="DripHub Logo" 
+              className="
+              [height:50px]
+              [width:auto]"
+            />
           </Link>
 
           {/* Desktop Search Bar */}
-          <div className="hidden lg:flex flex-1 max-w-4xl mx-4 xl:mx-8">
-            <div className="relative w-full">
-              <div className="flex rounded-2xl shadow-lg border border-gray-200 hover:border-orange-300 focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-100 transition-all duration-300">
+          <div className="[display:none] lg:[display:flex] [flex:1] [max-width:1024px] [margin:0_16px] xl:[margin:0_32px]">
+            <div className="[position:relative] [width:100%]">
+              <div className="[display:flex] [border-radius:16px] [box-shadow:0_4px_6px_rgba(0,0,0,0.1)] [border:1px_solid_#e5e7eb] hover:[border-color:#fed7aa] focus-within:[border-color:#f97316] focus-within:[box-shadow:0_0_0_4px_rgba(249,115,22,0.1)] [transition:all_0.3s]">
                 {/* Category Dropdown */}
-                <select className="bg-gray-50 text-gray-700 px-3 lg:px-4 py-3 rounded-l-2xl border-r border-gray-200 focus:outline-none focus:bg-white transition-colors duration-200 cursor-pointer text-sm lg:text-base">
+                <select className="[background-color:#f9fafb] [color:#374151] [padding:12px_12px] lg:[padding:12px_16px] [border-radius:16px_0_0_16px] [border-right:1px_solid_#e5e7eb] focus:[outline:none] focus:[background-color:white] [transition:all_0.2s] [cursor:pointer] [font-size:0.875rem] lg:[font-size:1rem]">
                   <option>All Categories</option>
                   <option>Electronics</option>
                   <option>Fashion</option>
@@ -50,46 +51,46 @@ const Header = () => {
                 {/* Search Input */}
                 <input
                   type="text"
-                  className="flex-1 px-4 lg:px-6 py-3 focus:outline-none text-gray-700 placeholder-gray-400 text-sm lg:text-base min-w-0"
+                  className="[flex:1] [padding:12px_16px] lg:[padding:12px_24px] focus:[outline:none] [color:#374151] [placeholder-color:#9ca3af] [font-size:0.875rem] lg:[font-size:1rem] [min-width:0]"
                   placeholder="Search for products, brands and more..."
                 />
                 
                 {/* Search Button */}
-                <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 px-6 lg:px-8 py-3 rounded-r-2xl text-white font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex-shrink-0">
-                  <MagnifyingGlassIcon className="h-5 w-5" />
+                <button className="[background:linear-gradient(to_right,#f97316,#ef4444)] hover:[background:linear-gradient(to_right,#ea580c,#dc2626)] [padding:12px_24px] lg:[padding:12px_32px] [border-radius:0_16px_16px_0] [color:white] [font-weight:500] [transition:all_0.3s] [transform:scale(1)] hover:[transform:scale(1.05)] [box-shadow:0_4px_6px_rgba(0,0,0,0.1)] hover:[box-shadow:0_8px_25px_rgba(0,0,0,0.15)] [flex-shrink:0]">
+                  <MagnifyingGlassIcon className="[height:20px] [width:20px]" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Right Side Elements */}
-          <div className="flex items-center gap-3 lg:gap-4 xl:gap-6 flex-shrink-0">
+          <div className="[display:flex] [align-items:center] [gap:12px] lg:[gap:16px] xl:[gap:24px] [flex-shrink:0]">
             {/* Language Selector */}
-            <div className="hidden lg:flex items-center gap-2 cursor-pointer group">
-              <div className="w-8 h-6 bg-gradient-to-br from-blue-600 to-blue-800 rounded-md flex items-center justify-center">
-                <span className="text-white text-xs font-bold">EN</span>
+            <div className="[display:none] lg:[display:flex] [align-items:center] [gap:8px] [cursor:pointer] group">
+              <div className="[width:32px] [height:24px] [background:linear-gradient(to_bottom_right,#2563eb,#1e3a8a)] [border-radius:6px] [display:flex] [align-items:center] [justify-content:center]">
+                <span className="[color:white] [font-size:0.75rem] [font-weight:700]">EN</span>
               </div>
-              <ChevronDownIcon className="h-4 w-4 text-gray-600 group-hover:text-orange-500 transition-colors" />
+              <ChevronDownIcon className="[height:16px] [width:16px] [color:#6b7280] group-hover:[color:#f97316] [transition:color_0.2s]" />
             </div>
 
             {/* Account & Lists */}
-            <div className="hidden xl:block cursor-pointer group">
-              <div className="text-xs text-gray-500 group-hover:text-orange-500 transition-colors">Hello, sign in</div>
-              <div className="font-semibold text-gray-900 group-hover:text-orange-500 transition-colors whitespace-nowrap">Account & Lists</div>
+            <div className="[display:none] xl:[display:block] [cursor:pointer] group">
+              <div className="[font-size:0.75rem] [color:#6b7280] group-hover:[color:#f97316] [transition:color_0.2s]">Hello, sign in</div>
+              <div className="[font-weight:600] [color:#111827] group-hover:[color:#f97316] [transition:color_0.2s] [white-space:nowrap]">Account & Lists</div>
             </div>
 
             {/* Returns & Orders */}
-            <div className="hidden xl:block cursor-pointer group">
-              <div className="text-xs text-gray-500 group-hover:text-orange-500 transition-colors">Returns</div>
-              <div className="font-semibold text-gray-900 group-hover:text-orange-500 transition-colors whitespace-nowrap">& Orders</div>
+            <div className="[display:none] xl:[display:block] [cursor:pointer] group">
+              <div className="[font-size:0.75rem] [color:#6b7280] group-hover:[color:#f97316] [transition:color_0.2s]">Returns</div>
+              <div className="[font-weight:600] [color:#111827] group-hover:[color:#f97316] [transition:color_0.2s] [white-space:nowrap]">& Orders</div>
             </div>
 
             {/* Wishlist */}
-            <Link to="/wishlist" className="relative group">
-              <div className="p-2 rounded-full hover:bg-orange-50 transition-colors duration-200">
-                <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-orange-500 transition-colors" />
+            <Link to="/wishlist" className="[position:relative] group">
+              <div className="[padding:8px] [border-radius:50%] hover:[background-color:#fff7ed] [transition:background-color_0.2s]">
+                <HeartIcon className="[height:24px] [width:24px] [color:#374151] group-hover:[color:#f97316] [transition:color_0.2s]" />
                 {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse">
+                  <span className="[position:absolute] [top:-4px] [right:-4px] [background-color:#ef4444] [color:white] [font-size:0.75rem] [border-radius:50%] [height:20px] [width:20px] [display:flex] [align-items:center] [justify-content:center] [font-weight:500] [animation:pulse_2s_infinite]">
                     {wishlist.length}
                   </span>
                 )}
@@ -97,34 +98,34 @@ const Header = () => {
             </Link>
 
             {/* Cart */}
-            <Link to="/cart" className="relative group">
-              <div className="p-2 rounded-full hover:bg-orange-50 transition-colors duration-200">
-                <ShoppingCartIcon className="h-6 w-6 text-gray-700 group-hover:text-orange-500 transition-colors" />
+            <Link to="/cart" className="[position:relative] group">
+              <div className="[padding:8px] [border-radius:50%] hover:[background-color:#fff7ed] [transition:background-color_0.2s]">
+                <ShoppingCartIcon className="[height:24px] [width:24px] [color:#374151] group-hover:[color:#f97316] [transition:color_0.2s]" />
                 {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse">
+                  <span className="[position:absolute] [top:-4px] [right:-4px] [background-color:#f97316] [color:white] [font-size:0.75rem] [border-radius:50%] [height:20px] [width:20px] [display:flex] [align-items:center] [justify-content:center] [font-weight:500] [animation:pulse_2s_infinite]">
                     {cart.length}
                   </span>
                 )}
               </div>
-              <span className="hidden lg:block text-sm font-medium text-gray-700 group-hover:text-orange-500 transition-colors">Cart</span>
+              <span className="[display:none] lg:[display:block] [font-size:0.875rem] [font-weight:500] [color:#374151] group-hover:[color:#f97316] [transition:color_0.2s]">Cart</span>
             </Link>
 
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="lg:[display:none] [padding:8px] [border-radius:8px] hover:[background-color:#f3f4f6] [transition:background-color_0.2s]"
             >
-              <Bars3Icon className="h-6 w-6 text-gray-700" />
+              <Bars3Icon className="[height:24px] [width:24px] [color:#374151]" />
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Search Bar */}
-      <div className="lg:hidden px-4 pb-4">
-        <div className="relative">
-          <div className="flex rounded-2xl shadow-lg border border-gray-200">
-            <select className="bg-gray-50 text-gray-700 px-3 py-3 rounded-l-2xl border-r border-gray-200 focus:outline-none">
+      <div className="lg:[display:none] [padding:0_16px_16px_16px]">
+        <div className="[position:relative]">
+          <div className="[display:flex] [border-radius:16px] [box-shadow:0_4px_6px_rgba(0,0,0,0.1)] [border:1px_solid_#e5e7eb]">
+            <select className="[background-color:#f9fafb] [color:#374151] [padding:12px] [border-radius:16px_0_0_16px] [border-right:1px_solid_#e5e7eb] focus:[outline:none]">
               <option>All</option>
               <option>Electronics</option>
               <option>Fashion</option>
@@ -132,11 +133,11 @@ const Header = () => {
             </select>
             <input
               type="text"
-              className="flex-1 px-4 py-3 focus:outline-none text-gray-700 placeholder-gray-400"
+              className="[flex:1] [padding:12px_16px] focus:[outline:none] [color:#374151] [placeholder-color:#9ca3af]"
               placeholder="Search DripHub"
             />
-            <button className="bg-gradient-to-r from-orange-500 to-red-500 px-4 py-3 rounded-r-2xl text-white">
-              <MagnifyingGlassIcon className="h-5 w-5" />
+            <button className="[background:linear-gradient(to_right,#f97316,#ef4444)] [padding:12px_16px] [border-radius:0_16px_16px_0] [color:white]">
+              <MagnifyingGlassIcon className="[height:20px] [width:20px]" />
             </button>
           </div>
         </div>
@@ -144,19 +145,19 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white shadow-lg">
-          <div className="px-4 py-4 space-y-4">
-            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-              <UserIcon className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-gray-900">Sign In</span>
+        <div className="lg:[display:none] [border-top:1px_solid_#e5e7eb] [background-color:white] [box-shadow:0_4px_6px_rgba(0,0,0,0.1)]">
+          <div className="[padding:16px] [display:flex] [flex-direction:column] [gap:16px]">
+            <div className="[display:flex] [align-items:center] [gap:12px] [padding:12px] [border-radius:8px] hover:[background-color:#f9fafb] [transition:background-color_0.2s]">
+              <UserIcon className="[height:20px] [width:20px] [color:#6b7280]" />
+              <span className="[font-weight:500] [color:#111827]">Sign In</span>
             </div>
-            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-              <MapPinIcon className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-gray-900">Deliver to Ahmedabad</span>
+            <div className="[display:flex] [align-items:center] [gap:12px] [padding:12px] [border-radius:8px] hover:[background-color:#f9fafb] [transition:background-color_0.2s]">
+              <MapPinIcon className="[height:20px] [width:20px] [color:#6b7280]" />
+              <span className="[font-weight:500] [color:#111827]">Deliver to Ahmedabad</span>
             </div>
-            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-              <FlagIcon className="h-5 w-5 text-gray-600" />
-              <span className="font-medium text-gray-900">Language: EN</span>
+            <div className="[display:flex] [align-items:center] [gap:12px] [padding:12px] [border-radius:8px] hover:[background-color:#f9fafb] [transition:background-color_0.2s]">
+              <FlagIcon className="[height:20px] [width:20px] [color:#6b7280]" />
+              <span className="[font-weight:500] [color:#111827]">Language: EN</span>
             </div>
           </div>
         </div>
