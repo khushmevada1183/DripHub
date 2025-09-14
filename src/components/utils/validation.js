@@ -46,10 +46,12 @@ export const validatePassword = (password, options = {}) => {
   };
 };
 
-// Phone number validation (US format)
+// Phone number validation (India format)
 export const validatePhoneNumber = (phone) => {
-  const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  return phoneRegex.test(phone.replace(/\s/g, ''));
+  if (!phone) return false;
+  const cleaned = phone.replace(/\D/g, '');
+  // Accept 10 digit numbers or numbers starting with country code 91 or +91 (12 or 13 digits when including +)
+  return /^(?:91)?[6-9]\d{9}$/.test(cleaned.replace(/^\+/, '')) || /^\+?91[6-9]\d{9}$/.test(phone);
 };
 
 // Credit card validation using Luhn algorithm
@@ -124,12 +126,17 @@ export const formatCreditCard = (cardNumber) => {
 export const formatPhoneNumber = (phone) => {
   const cleanedPhone = phone.replace(/\D/g, '');
   
+  // Format Indian numbers: +91 98765 43210 or 09876543210 or 9876543210
   if (cleanedPhone.length === 10) {
-    return cleanedPhone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-  } else if (cleanedPhone.length === 11 && cleanedPhone[0] === '1') {
-    return cleanedPhone.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '+$1 ($2) $3-$4');
+    return cleanedPhone.replace(/(\d{5})(\d{5})/, '$1 $2');
+  } else if (cleanedPhone.length === 11 && cleanedPhone[0] === '0') {
+    return cleanedPhone.replace(/0(\d{5})(\d{5})/, '0$1 $2');
+  } else if (cleanedPhone.length === 12 && cleanedPhone.startsWith('91')) {
+    return '+91 ' + cleanedPhone.slice(2).replace(/(\d{5})(\d{5})/, '$1 $2');
+  } else if (cleanedPhone.length === 13 && cleanedPhone.startsWith('091')) {
+    return '+91 ' + cleanedPhone.slice(3).replace(/(\d{5})(\d{5})/, '$1 $2');
   }
-  
+
   return phone;
 };
 

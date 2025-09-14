@@ -6,8 +6,7 @@ export const ROUTE_PATHS = {
   HOME: '/',
   PRODUCTS: '/products',
   PRODUCT_DETAILS: '/product/:id',
-  CATEGORIES: '/categories',
-  CATEGORY: '/category/:slug',
+  // CATEGORIES routes removed
   DEALS: '/deals',
   SEARCH: '/search',
   
@@ -86,32 +85,7 @@ export const ROUTES_CONFIG = [
       breadcrumb: ['Home', 'Products', 'Product Details']
     }
   },
-  {
-    path: ROUTE_PATHS.CATEGORIES,
-    name: 'Categories',
-    component: 'Categories',
-    layout: 'MainLayout',
-    meta: {
-      title: 'Categories - DripHub',
-      description: 'Shop by product categories',
-      requiresAuth: false,
-      showInNav: true,
-      breadcrumb: ['Home', 'Categories']
-    }
-  },
-  {
-    path: ROUTE_PATHS.CATEGORY,
-    name: 'Category',
-    component: 'Category',
-    layout: 'MainLayout',
-    meta: {
-      title: 'Category - DripHub',
-      description: 'Products in this category',
-      requiresAuth: false,
-      showInNav: false,
-      breadcrumb: ['Home', 'Categories', 'Category']
-    }
-  },
+  // Categories route entries removed because Categories page was deleted
   {
     path: ROUTE_PATHS.DEALS,
     name: 'Deals',

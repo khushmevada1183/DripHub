@@ -10,14 +10,14 @@ export const calculateDiscount = (originalPrice, salePrice) => {
 };
 
 export const formatProductPrice = (product) => {
-  const { price, salePrice, currency = 'USD' } = product;
-  
+  const { price, salePrice, currency = 'INR' } = product;
+
   return {
-    original: new Intl.NumberFormat('en-US', {
+    original: new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency
     }).format(price),
-    sale: salePrice ? new Intl.NumberFormat('en-US', {
+    sale: salePrice ? new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency
     }).format(salePrice) : null,
@@ -88,16 +88,20 @@ export const formatUserRole = (role) => {
 // Address helpers
 export const formatAddress = (address) => {
   if (!address) return '';
-  
-  const { street, city, state, zipCode, country } = address;
-  const parts = [street, city, state, zipCode, country].filter(Boolean);
+
+  // Support India-style 'pincode' as well as 'zipCode'
+  const { street, city, state, zipCode, pincode, country } = address;
+  const postal = pincode || zipCode;
+  const parts = [street, city, state, postal, country].filter(Boolean);
   return parts.join(', ');
 };
 
 export const validateAddress = (address) => {
-  const required = ['street', 'city', 'state', 'zipCode'];
+  // Accept either pincode or zipCode for postal field
+  const required = ['street', 'city', 'state'];
   const missing = required.filter(field => !address[field]);
-  
+  if (!address.pincode && !address.zipCode) missing.push('pincode/zipCode');
+
   return {
     isValid: missing.length === 0,
     missing,

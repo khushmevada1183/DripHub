@@ -29,7 +29,7 @@ const Subheader = () => {
     { 
       name: 'All', 
       icon: Bars3Icon, 
-      path: '/categories',
+      path: '/products',
       hasDropdown: true,
       subcategories: ['Electronics', 'Fashion', 'Home', 'Books', 'Sports', 'Beauty']
     },
@@ -91,7 +91,7 @@ const Subheader = () => {
                       {category.subcategories.map((subcategory, subIndex) => (
                         <Link
                           key={subIndex}
-                          to={`${category.path}/${subcategory.toLowerCase().replace(/\s+/g, '-')}`}
+                          to={`${category.path}?category=${encodeURIComponent(subcategory)}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200"
                         >
                           {subcategory}
@@ -105,7 +105,6 @@ const Subheader = () => {
           </div>
         </div>
       </nav>
-
       {/* Mobile Subheader */}
       <div className="lg:hidden bg-white border-b border-gray-200">
         <div className="px-4 py-3">

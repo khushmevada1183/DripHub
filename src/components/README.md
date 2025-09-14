@@ -124,7 +124,7 @@ const [user, setUser] = useLocalStorage('user', null);
 import { formatPrice, validateEmail, debounce, slugify } from '../components';
 
 // Format prices
-const formattedPrice = formatPrice(99.99, 'USD'); // "$99.99"
+const formattedPrice = formatPrice(99.99, 'INR'); // "₹99.99"
 
 // Validation
 const isValid = validateEmail('user@example.com'); // true

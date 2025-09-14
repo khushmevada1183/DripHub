@@ -3,144 +3,91 @@ import { useSearchParams } from 'react-router-dom';
 import { ProductCard } from '../../components';
 import { useCart } from '../../Context/CartContext';
 import { m, staggerContainer, fadeIn, viewport } from '../../animation/motion';
-
-// Mock products data - replace with API call
-const mockProducts = [
-  {
-    id: 1,
-    title: 'Wireless Noise-Cancelling Headphones',
-    name: 'Wireless Noise-Cancelling Headphones',
-    price: 199.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Premium wireless headphones with active noise cancellation',
-    rating: { rate: 4.5, count: 1234 },
-    reviews: 1234,
-    category: 'Electronics',
-  },
-  {
-    id: 2,
-    title: 'Smart Fitness Watch',
-    name: 'Smart Fitness Watch',
-    price: 149.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Track your fitness goals with this advanced smartwatch',
-    rating: { rate: 4.8, count: 856 },
-    reviews: 856,
-    category: 'Electronics',
-  },
-  {
-    id: 3,
-    title: 'Premium Coffee Maker',
-    name: 'Premium Coffee Maker',
-    price: 89.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Brew perfect coffee with this programmable coffee maker',
-    rating: { rate: 4.6, count: 2341 },
-    reviews: 2341,
-    category: 'Home & Kitchen',
-  },
-  {
-    id: 4,
-    title: 'Ergonomic Office Chair',
-    name: 'Ergonomic Office Chair',
-    price: 299.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Comfortable office chair with lumbar support',
-    rating: { rate: 4.7, count: 3421 },
-    reviews: 3421,
-    category: 'Furniture',
-  },
-  {
-    id: 5,
-    title: 'Smartphone Case',
-    name: 'Smartphone Case',
-    price: 24.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Protective case for your smartphone',
-    rating: { rate: 4.2, count: 567 },
-    reviews: 567,
-    category: 'Accessories',
-  },
-  {
-    id: 6,
-    title: 'Gaming Keyboard',
-    name: 'Gaming Keyboard',
-    price: 129.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Mechanical gaming keyboard with RGB lighting',
-    rating: { rate: 4.9, count: 892 },
-    reviews: 892,
-    category: 'Electronics',
-  }
-];
+import { getProducts } from '../../api/Api';
 
 const Products = () => {
   const [searchParams] = useSearchParams();
+  const { addToCart, addToWishlist } = useCart();
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
     minPrice: searchParams.get('minPrice') || '',
     maxPrice: searchParams.get('maxPrice') || '',
-    sortBy: searchParams.get('sort') || 'featured'
+    sortBy: searchParams.get('sort') || 'featured',
   });
 
-  const { addToCart, addToWishlist } = useCart();
-
   useEffect(() => {
-    // Simulate API call
+    let mounted = true;
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        let filteredProducts = [...mockProducts];
-        
-        // Apply filters
-        if (filters.category) {
-          filteredProducts = filteredProducts.filter(
-            product => product.category.toLowerCase() === filters.category.toLowerCase()
-          );
+        const apiFilters = {};
+        if (filters.category) apiFilters.category = filters.category;
+        if (filters.minPrice) apiFilters.min_price = filters.minPrice;
+        if (filters.maxPrice) apiFilters.max_price = filters.maxPrice;
+
+        const response = await getProducts(apiFilters);
+
+        if (!mounted) return;
+
+        if (response && response.success && Array.isArray(response.data)) {
+          let items = response.data.map((p) => ({
+            id: p.id,
+            title: p.title || p.name,
+            name: p.title || p.name,
+            price: p.price,
+            image: p.image || p.thumbnail || 'https://via.placeholder.com/300',
+            description: p.description,
+            rating: p.rating || { rate: p.avg_rating || 0, count: p.reviews || 0 },
+            reviews: p.reviews || 0,
+            category: p.category || p.category_name || ''
+          }));
+
+          // Client-side filtering for any unsupported fields
+          if (filters.category) {
+            items = items.filter(item => (item.category || '').toLowerCase() === filters.category.toLowerCase());
+          }
+          if (filters.minPrice) {
+            items = items.filter(item => item.price >= parseFloat(filters.minPrice));
+          }
+          if (filters.maxPrice) {
+            items = items.filter(item => item.price <= parseFloat(filters.maxPrice));
+          }
+
+          // Sorting
+          switch (filters.sortBy) {
+            case 'price-low':
+              items.sort((a, b) => a.price - b.price);
+              break;
+            case 'price-high':
+              items.sort((a, b) => b.price - a.price);
+              break;
+            case 'rating':
+              items.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+              break;
+            default:
+              // featured - keep API order
+              break;
+          }
+
+          setProducts(items);
+        } else {
+          setProducts([]);
         }
-        
-        if (filters.minPrice) {
-          filteredProducts = filteredProducts.filter(
-            product => product.price >= parseFloat(filters.minPrice)
-          );
-        }
-        
-        if (filters.maxPrice) {
-          filteredProducts = filteredProducts.filter(
-            product => product.price <= parseFloat(filters.maxPrice)
-          );
-        }
-        
-        // Apply sorting
-        switch (filters.sortBy) {
-          case 'price-low':
-            filteredProducts.sort((a, b) => a.price - b.price);
-            break;
-          case 'price-high':
-            filteredProducts.sort((a, b) => b.price - a.price);
-            break;
-          case 'rating':
-            filteredProducts.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
-            break;
-          default:
-            // Keep original order for 'featured'
-            break;
-        }
-        
-        setProducts(filteredProducts);
       } catch (error) {
         console.error('Failed to fetch products:', error);
+        setProducts([]);
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
     };
 
     fetchProducts();
+
+    return () => { mounted = false; };
   }, [filters]);
 
   const handleFilterChange = (key, value) => {
@@ -200,7 +147,7 @@ const Products = () => {
               type="number"
               value={filters.minPrice}
               onChange={(e) => handleFilterChange('minPrice', e.target.value)}
-              placeholder="$0"
+              placeholder="₹0"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -213,7 +160,7 @@ const Products = () => {
               type="number"
               value={filters.maxPrice}
               onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-              placeholder="$999"
+              placeholder="₹999"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>

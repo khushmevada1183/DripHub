@@ -7,7 +7,7 @@ const Footer = () => {
       title: 'Shop',
       links: [
         { name: 'All Products', href: '/products' },
-        { name: 'Categories', href: '/categories' },
+  { name: 'Categories', href: '/products' },
         { name: 'Best Sellers', href: '/deals/best-sellers' },
         { name: 'New Arrivals', href: '/deals/new-arrivals' },
         { name: 'Sale', href: '/deals/sale' }

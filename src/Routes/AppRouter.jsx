@@ -11,8 +11,7 @@ const LazyComponents = {
   Home: lazy(() => import('../Pages/Home/Home')),
   Products: lazy(() => import('../Pages/Products/Products')),
   ProductDetails: lazy(() => import('../Pages/ProductDetails/ProductDetails')),
-  Categories: lazy(() => import('../Pages/Categories/Categories')),
-  Category: lazy(() => import('../Pages/Categories/Categories')), // Using same component for now
+  // Categories removed
   Deals: lazy(() => import('../Pages/Deals/Deals')),
   Search: lazy(() => import('../Pages/Deals/Deals')), // Placeholder
   

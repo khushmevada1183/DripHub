@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { ROUTE_PATHS } from './routes.config';
-import { useAuth } from '../Context/AuthContext'; // We'll create this
-import { useDocumentTitle } from '../components/hooks/useDocumentTitle'; // We'll create this
+import { useAuth } from '../Context/AuthContext'; // application auth context
+import { useDocumentTitle } from '../components/hooks/useDocumentTitle';
 import { PageLoader } from '../components/LoadingSpinner';
+import { getCurrentToken } from '../api/Api';
 
 // 🛡️ Route Guard Component for authentication and authorization
 export const RouteGuard = ({ children, routeConfig }) => {
@@ -12,6 +13,20 @@ export const RouteGuard = ({ children, routeConfig }) => {
   
   // Set document title based on route config
   useDocumentTitle(routeConfig.meta.title);
+
+  // Immediate localStorage token check: if route requires authentication and there's
+  // no token present in localStorage, redirect to login right away. This avoids
+  // waiting for async profile checks when the user clearly has no token.
+  const localToken = typeof window !== 'undefined' ? getCurrentToken() : null;
+  if (routeConfig.meta?.requiresAuth && !localToken) {
+    const redirectTo = routeConfig.meta.redirectUnauth || ROUTE_PATHS.LOGIN;
+    return (
+      <Navigate
+        to={`${redirectTo}?redirect=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
+  }
   
   // Add meta description
   useEffect(() => {
