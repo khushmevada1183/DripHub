@@ -369,6 +369,15 @@ export const getCategories = () => getData("/categories");
 export const getProductsByCategory = (categoryId, filters = {}) =>
   getData(`/categories/${categoryId}/products`, filters);
 
+/**
+ * Get featured products
+ * @param {number} skip - pagination skip
+ * @param {number} limit - pagination limit
+ * @returns {Promise} - Featured products response
+ */
+export const getFeaturedProducts = (skip = 0, limit = 100) =>
+  getData('/products/features', { skip, limit });
+
 // ==========================
 // USER APIs
 // ==========================

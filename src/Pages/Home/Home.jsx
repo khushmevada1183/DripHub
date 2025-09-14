@@ -5,7 +5,7 @@ import { m, staggerContainer, fadeIn, scaleIn, viewport } from '../../animation/
 import { ProductCard, Button, StarRating } from '../../components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProducts, getCurrentToken } from '../../api/Api';
+import { getFeaturedProducts, getCurrentToken } from '../../api/Api';
 
 const products = [];
 
@@ -39,18 +39,19 @@ const Home = () => {
     const loadFeatured = async () => {
       setLoadingFeatured(true);
       try {
-        const res = await getProducts({ skip: 0, limit: 6 });
+        const res = await getFeaturedProducts(0, 6);
         if (res && res.success && Array.isArray(res.data) && mounted) {
           const items = res.data.map((p) => ({
             id: p.id,
-            title: p.title || p.name,
-            name: p.title || p.name,
-            price: p.price,
-            image: p.image || p.thumbnail || 'https://via.placeholder.com/300',
-            description: p.description,
-            rating: p.rating || { rate: p.avg_rating || 0, count: p.reviews || 0 },
-            reviews: p.reviews || 0,
-            category: p.category || p.category_name || ''
+            title: p.product_name || p.name,
+            name: p.product_name || p.name,
+            price: p.current_price ?? p.real_price ?? 0,
+            image: p.img_url || 'https://via.placeholder.com/300',
+            description: p.description || '',
+            rating: { rate: p.rating ?? 0, count: p.people_rated_count ?? 0 },
+            reviews: p.people_rated_count ?? 0,
+            category: p.category || '' ,
+            createdAt: p.created_at
           }));
           setFeatured(items);
         }
