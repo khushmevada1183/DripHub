@@ -1,9 +1,9 @@
 // Advanced formatting utilities
 
 // Price and currency formatting
-export const formatPrice = (price, currency = 'USD', locale = 'en-US') => {
-  if (price === null || price === undefined) return '$0.00';
-  
+export const formatPrice = (price, currency = 'INR', locale = 'en-IN') => {
+  if (price === null || price === undefined) return '₹0.00';
+
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
@@ -12,7 +12,7 @@ export const formatPrice = (price, currency = 'USD', locale = 'en-US') => {
   }).format(Number(price));
 };
 
-export const formatCurrency = (amount, currency = 'USD', locale = 'en-US', options = {}) => {
+export const formatCurrency = (amount, currency = 'INR', locale = 'en-IN', options = {}) => {
   const defaultOptions = {
     style: 'currency',
     currency,
@@ -20,12 +20,12 @@ export const formatCurrency = (amount, currency = 'USD', locale = 'en-US', optio
     maximumFractionDigits: 2,
     ...options
   };
-  
+
   return new Intl.NumberFormat(locale, defaultOptions).format(amount);
 };
 
 // Date and time formatting
-export const formatDate = (date, options = {}, locale = 'en-US') => {
+export const formatDate = (date, options = {}, locale = 'en-GB') => {
   if (!date) return '';
   
   const defaultOptions = {

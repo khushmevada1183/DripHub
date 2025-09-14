@@ -3,53 +3,10 @@ import { useCart } from '../../Context/CartContext';
 import { ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/solid';
 import { m, staggerContainer, fadeIn, scaleIn, viewport } from '../../animation/motion';
 import { ProductCard, Button, StarRating } from '../../components';
+import { useEffect, useState } from 'react';
+import { getProducts } from '../../api/Api';
 
-const products = [
-  {
-    id: 1,
-    title: 'Wireless Noise-Cancelling Headphones',
-    name: 'Wireless Noise-Cancelling Headphones',
-    price: 199.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Premium wireless headphones with active noise cancellation',
-    rating: { rate: 4.5, count: 1234 },
-    reviews: 1234,
-    category: 'Electronics',
-  },
-  {
-    id: 2,
-    title: 'Smart Fitness Watch',
-    name: 'Smart Fitness Watch',
-    price: 149.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Track your fitness goals with this advanced smartwatch',
-    rating: { rate: 4.8, count: 856 },
-    reviews: 856,
-    category: 'Electronics',
-  },
-  {
-    id: 3,
-    title: 'Premium Coffee Maker',
-    name: 'Premium Coffee Maker',
-    price: 89.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Brew perfect coffee with this programmable coffee maker',
-    rating: { rate: 4.6, count: 2341 },
-    reviews: 2341,
-    category: 'Home & Kitchen',
-  },
-  {
-    id: 4,
-    title: 'Ergonomic Office Chair',
-    name: 'Ergonomic Office Chair',
-    price: 299.99,
-    image: 'https://via.placeholder.com/300',
-    description: 'Comfortable office chair with lumbar support',
-    rating: { rate: 4.7, count: 3421 },
-    reviews: 3421,
-    category: 'Furniture',
-  },
-];
+const products = [];
 
 const categories = [
   { name: 'Electronics', icon: '🔌' },
@@ -64,6 +21,39 @@ const categories = [
 
 const Home = () => {
   const { addToCart, addToWishlist } = useCart();
+  const [featured, setFeatured] = useState([]);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    const loadFeatured = async () => {
+      setLoadingFeatured(true);
+      try {
+        const res = await getProducts({ skip: 0, limit: 6 });
+        if (res && res.success && Array.isArray(res.data) && mounted) {
+          const items = res.data.map((p) => ({
+            id: p.id,
+            title: p.title || p.name,
+            name: p.title || p.name,
+            price: p.price,
+            image: p.image || p.thumbnail || 'https://via.placeholder.com/300',
+            description: p.description,
+            rating: p.rating || { rate: p.avg_rating || 0, count: p.reviews || 0 },
+            reviews: p.reviews || 0,
+            category: p.category || p.category_name || ''
+          }));
+          setFeatured(items);
+        }
+      } catch (error) {
+        console.error('Failed to load featured products', error);
+      } finally {
+        if (mounted) setLoadingFeatured(false);
+      }
+    };
+
+    loadFeatured();
+    return () => { mounted = false; };
+  }, []);
 
   const renderStars = (rating) => {
     return <StarRating value={rating} readonly size="sm" />;
@@ -84,7 +74,7 @@ const Home = () => {
             Discover Amazing Deals
           </h1>
           <m.p className="[font-size:1.25rem] [margin-bottom:32px] [color:rgba(255,255,255,0.9)]" variants={fadeIn('up', 0.05)}>
-            Shop the latest products at unbeatable prices. Free shipping on orders over $50!
+            Shop the latest products at unbeatable prices. Free delivery on orders above ₹499!
           </m.p>
           <m.div className="[display:flex] [gap:16px]" variants={fadeIn('up', 0.1)}>
             <Button 
@@ -134,16 +124,20 @@ const Home = () => {
           </Link>
         </div>
         <m.div className="[display:grid] [grid-template-columns:1fr] sm:[grid-template-columns:repeat(2,1fr)] lg:[grid-template-columns:repeat(3,1fr)] xl:[grid-template-columns:repeat(4,1fr)] 2xl:[grid-template-columns:repeat(5,1fr)] [gap:24px] [width:100%]" initial="hidden" whileInView="show" variants={staggerContainer(0.1)} viewport={viewport}>
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddToCart={addToCart}
-              onToggleWishlist={addToWishlist}
-              isInWishlist={false}
-              className="[background-color:white] hover:[transform:scale(1.05)] [transition:all_0.3s] [box-shadow:0_1px_3px_rgba(0,0,0,0.1)] [border:1px_solid_#f3f4f6]"
-            />
-          ))}
+          {loadingFeatured ? (
+            <div className="col-span-full text-center py-6">Loading featured products...</div>
+          ) : (
+            (featured || []).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                onToggleWishlist={addToWishlist}
+                isInWishlist={false}
+                className="[background-color:white] hover:[transform:scale(1.05)] [transition:all_0.3s] [box-shadow:0_1px_3px_rgba(0,0,0,0.1)] [border:1px_solid_#f3f4f6]"
+              />
+            ))
+          )}
         </m.div>
       </section>
 

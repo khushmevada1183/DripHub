@@ -27,7 +27,7 @@ const Account = () => {
               <input
                 type="tel"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="+1 234 567 890"
+                placeholder="+91 98765 43210"
               />
             </div>
             <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg">
@@ -42,7 +42,7 @@ const Account = () => {
             <div className="border-b pb-4">
               <div className="flex justify-between mb-2">
                 <span className="font-semibold">Order #12345</span>
-                <span className="text-gray-600">$299.99</span>
+                <span className="text-gray-600">₹299.99</span>
               </div>
               <p className="text-gray-600">Placed on January 1, 2024</p>
               <p className="text-green-600">Delivered</p>
@@ -50,7 +50,7 @@ const Account = () => {
             <div className="border-b pb-4">
               <div className="flex justify-between mb-2">
                 <span className="font-semibold">Order #12346</span>
-                <span className="text-gray-600">$199.99</span>
+                <span className="text-gray-600">₹199.99</span>
               </div>
               <p className="text-gray-600">Placed on December 15, 2023</p>
               <p className="text-green-600">Delivered</p>
