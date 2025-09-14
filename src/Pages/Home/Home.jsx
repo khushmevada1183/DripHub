@@ -4,7 +4,8 @@ import { ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/solid';
 import { m, staggerContainer, fadeIn, scaleIn, viewport } from '../../animation/motion';
 import { ProductCard, Button, StarRating } from '../../components';
 import { useEffect, useState } from 'react';
-import { getProducts } from '../../api/Api';
+import { useNavigate } from 'react-router-dom';
+import { getProducts, getCurrentToken } from '../../api/Api';
 
 const products = [];
 
@@ -23,6 +24,15 @@ const Home = () => {
   const { addToCart, addToWishlist } = useCart();
   const [featured, setFeatured] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
+  const navigate = useNavigate();
+
+  // If route requires authentication behavior: redirect to login immediately when no token
+  useEffect(() => {
+    const token = getCurrentToken();
+    if (!token) {
+      navigate(`/login?redirect=${encodeURIComponent('/')}`);
+    }
+  }, []);
 
   useEffect(() => {
     let mounted = true;
